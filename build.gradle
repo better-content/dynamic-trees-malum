@@ -1,0 +1,111 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '6.0.44'
+    id 'eclipse'
+    id 'maven-publish'
+}
+
+version = project.hasProperty('mod_version') ? project.mod_version : '1.0.0'
+group = 'com.dtmalum'
+base {
+    archivesName = 'dtmalum'
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+
+    copyIdeResources = true
+
+    runs {
+        configureEach {
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+        }
+
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                dtmalum {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                dtmalum {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            args '--mod', 'dtmalum',
+                 '--all',
+                 '--output', file('src/generated/resources/'),
+                 '--existing', file('src/main/resources/'),
+                 '--existing-mod', 'dynamictrees',
+                 '--existing-mod', 'malum'
+            mods {
+                dtmalum {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+    exclude '.cache/**'
+}
+
+repositories {
+    maven {
+        name = 'MinecraftForge'
+        url = 'https://maven.minecraftforge.net'
+    }
+    maven {
+        url = 'https://harleyoconnor.com/maven'
+    }
+    maven {
+        url = 'https://www.cursemaven.com'
+        content {
+            includeGroup 'curse.maven'
+        }
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
+    implementation fg.deobf("com.ferreusveritas.dynamictrees:DynamicTrees-1.20.1:1.4.9")
+    runtimeOnly fg.deobf("curse.maven:malum-484064:6646111")
+    runtimeOnly fg.deobf("curse.maven:lodestone-616457:6213794")
+    runtimeOnly fg.deobf("curse.maven:curios-309927:6418456")
+    // Optional at runtime if you use DTPlus-only treepack content.
+    // runtimeOnly fg.deobf("com.ferreusveritas.dynamictreesplus:DynamicTreesPlus-1.20.1:1.2.1")
+}
+
+tasks.named('jar') {
+    manifest {
+        attributes([
+                'Specification-Title'     : 'dtmalum',
+                'Specification-Vendor'    : 'dtmalum',
+                'Specification-Version'   : '1',
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.version,
+                'Implementation-Vendor'   : 'dtmalum'
+        ])
+    }
+}
+
+jar {
+    finalizedBy 'reobfJar'
+}

@@ -1,0 +1,25 @@
+[
+  {
+    "__comment": "Cancel Malum's custom static runewood features only in their tagged biomes.",
+    "select": {
+      "OR": [
+        {
+          "tag": "#malum:has_runewood"
+        },
+        {
+          "tag": "#malum:has_rare_runewood"
+        },
+        {
+          "tag": "#malum:has_azure_runewood"
+        },
+        {
+          "tag": "#malum:has_rare_azure_runewood"
+        }
+      ]
+    },
+    "cancellers": {
+      "type": "dtmalum:runewood_tree",
+      "namespace": "malum"
+    }
+  }
+]

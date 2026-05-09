@@ -1,0 +1,53 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+issueTrackerURL="https://github.com/yourname/dtmalum/issues"
+
+[[mods]]
+modId="dtmalum"
+version="${file.jarVersion}"
+displayName="Dynamic Trees for Malum"
+authors="gerald"
+description='''Dynamic Trees compatibility addon for Malum Runewood trees.'''
+
+[[dependencies.dtmalum]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.dtmalum]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20,1.21)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.dtmalum]]
+    modId="dynamictrees"
+    mandatory=true
+    versionRange="[1.4.7,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.dtmalum]]
+    modId="malum"
+    mandatory=true
+    versionRange="[1.6.7,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.dtmalum]]
+    modId="dynamictreesplus"
+    mandatory=false
+    versionRange="[1.2.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.dtmalum]]
+    modId="dynamic_trees_addon_lib"
+    mandatory=false
+    versionRange="[0.1.0,)"
+    ordering="AFTER"
+    side="BOTH"

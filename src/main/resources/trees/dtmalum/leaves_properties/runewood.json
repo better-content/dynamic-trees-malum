@@ -1,0 +1,10 @@
+{
+  "primitive_leaves": "malum:runewood_leaves",
+  "cell_kit": "dynamictrees:deciduous",
+  "model_overrides": {
+    "leaves": "malum:block/runewood_leaves"
+  },
+  "texture_overrides": {
+    "leaves": "malum:block/runewood/runewood_leaves"
+  }
+}
