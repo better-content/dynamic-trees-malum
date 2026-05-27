@@ -89,6 +89,8 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:malum-484064:6646111")
     runtimeOnly fg.deobf("curse.maven:lodestone-616457:6213794")
     runtimeOnly fg.deobf("curse.maven:curios-309927:6418456")
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'com.google.code.gson:gson:2.10.1'
     // Optional at runtime if you use DTPlus-only treepack content.
     // runtimeOnly fg.deobf("com.ferreusveritas.dynamictreesplus:DynamicTreesPlus-1.20.1:1.2.1")
 }
@@ -108,4 +110,8 @@ tasks.named('jar') {
 
 jar {
     finalizedBy 'reobfJar'
+}
+
+test {
+    useJUnitPlatform()
 }
