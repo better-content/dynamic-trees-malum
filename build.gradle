@@ -21,6 +21,7 @@ minecraft {
         configureEach {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            property 'forge.enabledGameTestNamespaces', 'dtmalum,minecraft'
         }
 
         client {
@@ -36,6 +37,17 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                dtmalum {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        gameTestServer {
+            workingDirectory project.file('run-gametest')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             mods {
@@ -67,6 +79,17 @@ sourceSets.main.resources {
     exclude '.cache/**'
 }
 
+if (file('src/gameteststructures').exists()) {
+    tasks.register('syncGameTestStructures', Copy) {
+        from('src/gameteststructures')
+        into(project.file('run-gametest/gameteststructures'))
+    }
+
+    tasks.matching { it.name.startsWith('prepareRunGameTestServer') }.configureEach {
+        dependsOn(tasks.named('syncGameTestStructures'))
+    }
+}
+
 repositories {
     maven {
         name = 'MinecraftForge'
@@ -84,7 +107,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
+    minecraft 'net.minecraftforge:forge:1.20.1-47.4.13'
     implementation fg.deobf("com.ferreusveritas.dynamictrees:DynamicTrees-1.20.1:1.4.9")
     runtimeOnly fg.deobf("curse.maven:malum-484064:6646111")
     runtimeOnly fg.deobf("curse.maven:lodestone-616457:6213794")

@@ -1,6 +1,7 @@
 /.gradle/
 /build/
 /run/
+/run-gametest/
 /logs/
 /out/
 /bin/
