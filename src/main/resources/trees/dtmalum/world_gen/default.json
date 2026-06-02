@@ -13,11 +13,13 @@
     "select": {
       "tag": "#malum:has_rare_runewood"
     },
-    "apply": {
-      "species": "dtmalum:runewood",
-      "density": 0.22,
-      "chance": 0.09
-    }
+    "apply": [
+      {
+        "species": "dtmalum:runewood",
+        "density": 0.22,
+        "chance": 0.09
+      }
+    ]
   },
   {
     "select": {

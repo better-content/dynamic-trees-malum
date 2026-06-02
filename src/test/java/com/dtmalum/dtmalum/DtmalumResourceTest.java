@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.IOException;
@@ -55,12 +56,18 @@ final class DtmalumResourceTest {
         Set<String> species = resourceIds(TREE_ROOT.resolve("species"));
         Path defaultWorldGen = TREE_ROOT.resolve("world_gen/default.json");
 
-        JsonParser.parseReader(Files.newBufferedReader(defaultWorldGen)).getAsJsonArray().forEach(element -> {
-            JsonObject apply = element.getAsJsonObject().getAsJsonObject("apply");
+        JsonArray defaultEntries = JsonParser.parseReader(Files.newBufferedReader(defaultWorldGen)).getAsJsonArray();
+        defaultEntries.forEach(element -> {
+            JsonObject apply = element.getAsJsonObject().get("apply").isJsonArray()
+                    ? element.getAsJsonObject().getAsJsonArray("apply").get(0).getAsJsonObject()
+                    : element.getAsJsonObject().getAsJsonObject("apply");
             assertTrue(species.contains(apply.get("species").getAsString()), "unknown species in " + defaultWorldGen);
             assertTrue(apply.get("density").getAsDouble() > 0.0, "density must be positive");
             assertTrue(apply.get("chance").getAsDouble() > 0.0, "chance must be positive");
         });
+        JsonObject rareRunewood = defaultEntries.get(1).getAsJsonObject();
+        assertEquals("#malum:has_rare_runewood", rareRunewood.getAsJsonObject("select").get("tag").getAsString());
+        assertTrue(rareRunewood.get("apply").isJsonArray(), "rare runewood should add to existing forest species pools");
 
         Path cancellers = TREE_ROOT.resolve("world_gen/feature_cancellers.json");
         JsonObject canceller = JsonParser.parseReader(Files.newBufferedReader(cancellers))
