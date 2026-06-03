@@ -1,25 +1,50 @@
 [
   {
-    "__comment": "Cancel Malum's custom static runewood features only in their tagged biomes.",
+    "__comment": "Cancel Malum's static runewood feature in regular runewood biomes.",
     "select": {
-      "OR": [
-        {
-          "tag": "#malum:has_runewood"
-        },
-        {
-          "tag": "#malum:has_rare_runewood"
-        },
-        {
-          "tag": "#malum:has_azure_runewood"
-        },
-        {
-          "tag": "#malum:has_rare_azure_runewood"
-        }
-      ]
+      "tag": "#malum:has_runewood"
     },
     "cancellers": {
       "type": "dtmalum:runewood_tree",
-      "namespace": "malum"
+      "namespaces": [
+        "malum"
+      ]
+    }
+  },
+  {
+    "__comment": "Cancel Malum's static runewood feature in rare runewood biomes.",
+    "select": {
+      "tag": "#malum:has_rare_runewood"
+    },
+    "cancellers": {
+      "type": "dtmalum:runewood_tree",
+      "namespaces": [
+        "malum"
+      ]
+    }
+  },
+  {
+    "__comment": "Cancel Malum's static azure runewood feature in regular azure runewood biomes.",
+    "select": {
+      "tag": "#malum:has_azure_runewood"
+    },
+    "cancellers": {
+      "type": "dtmalum:runewood_tree",
+      "namespaces": [
+        "malum"
+      ]
+    }
+  },
+  {
+    "__comment": "Cancel Malum's static azure runewood feature in rare azure runewood biomes.",
+    "select": {
+      "tag": "#malum:has_rare_azure_runewood"
+    },
+    "cancellers": {
+      "type": "dtmalum:runewood_tree",
+      "namespaces": [
+        "malum"
+      ]
     }
   }
 ]

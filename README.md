@@ -24,7 +24,7 @@ Main mod bootstrap follows current 1.20.1 pattern with:
 ## Versions tested against
 
 - Minecraft: `1.20.1`
-- Forge: `47.3.0`
+- Forge: `47.4.13`
 - Dynamic Trees dependency in build: `1.4.9`
 - Malum jar inspected for IDs: `malum-1.20.1-1.6.7.jar`
 
@@ -59,32 +59,20 @@ Note: Malum `1.6.7` does not provide `azure_runewood_log`; Azure Runewood worldg
 
 ## Worldgen replacement strategy
 
-`dtmalum` uses DT worldgen + feature cancellers:
+`dtmalum` uses DT worldgen splices plus scoped feature cancellers:
 
-- Adds dynamic species generation in biome tags:
+- Splices dynamic species into existing Dynamic Trees species pools in biome tags, without overriding biome tree density/chance:
   - `#malum:has_runewood`
   - `#malum:has_rare_runewood`
   - `#malum:has_azure_runewood`
   - `#malum:has_rare_azure_runewood`
-- Cancels static Malum tree features only in those same biome tag selections via:
-  - `type: tree`
-  - `namespace: malum`
-
-This is intentionally scoped to tree generation and avoids broad namespace-wide non-tree removals.
+- Cancels Malum's custom `malum:runewood_tree` configured feature type only in those same biome tags and only for the `malum` namespace.
 
 ## Tuning worldgen
 
-Edit:
-
-- `src/main/resources/trees/dtmalum/world_gen/default.json`
-
-Tune per-entry:
-
-- `density`
-- `chance`
+Edit `src/main/resources/trees/dtmalum/world_gen/default.json` and tune the random species weights. Avoid setting per-biome `density` or `chance` unless the pack explicitly wants this addon to change total tree density.
 
 ## Known limitations
 
 - Azure Runewood currently shares the Runewood primitive log because that is how Malum `1.6.7` is configured.
-- Canceller currently targets Malum tree-type features by namespace in selected Malum biome tags; if Malum adds other `tree`-type features in those tags in future versions, narrow selectors further.
 - Soulwood integration is deferred.

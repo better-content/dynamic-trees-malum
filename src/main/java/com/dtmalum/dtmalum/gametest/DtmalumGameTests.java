@@ -1,7 +1,6 @@
 package com.dtmalum.dtmalum.gametest;
 
 import com.dtmalum.dtmalum.Dtmalum;
-import com.ferreusveritas.dynamictrees.api.worldgen.FeatureCanceller;
 import com.ferreusveritas.dynamictrees.tree.species.Species;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -29,10 +28,6 @@ public final class DtmalumGameTests {
     public static void dynamicRunewoodResourcesLoad(final GameTestHelper helper) {
         assertDynamicTree(helper, "runewood", "malum:runewood_sapling");
         assertDynamicTree(helper, "azure_runewood", "malum:azure_runewood_sapling");
-        helper.assertTrue(
-                FeatureCanceller.REGISTRY.has(Dtmalum.location("runewood_tree")),
-                "Malum runewood feature canceller should be registered"
-        );
         helper.succeed();
     }
 

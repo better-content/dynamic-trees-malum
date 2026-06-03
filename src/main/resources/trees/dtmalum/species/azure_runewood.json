@@ -17,9 +17,6 @@
     "bottom_flare",
     "roots"
   ],
-  "texture_overrides": {
-    "seed": "malum:block/runewood/azure_runewood_sapling"
-  },
   "lang_overrides": {
     "seed": "Azure Runewood Seed"
   }

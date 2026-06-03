@@ -4,9 +4,13 @@
       "tag": "#malum:has_runewood"
     },
     "apply": {
-      "species": "dtmalum:runewood",
-      "density": 0.18,
-      "chance": 0.12
+      "species": {
+        "method": "splice_before",
+        "random": {
+          "dtmalum:runewood": 1,
+          "...": 9
+        }
+      }
     }
   },
   {
@@ -15,9 +19,13 @@
     },
     "apply": [
       {
-        "species": "dtmalum:runewood",
-        "density": 0.22,
-        "chance": 0.09
+        "species": {
+          "method": "splice_before",
+          "random": {
+            "dtmalum:runewood": 1,
+            "...": 15
+          }
+        }
       }
     ]
   },
@@ -26,9 +34,13 @@
       "tag": "#malum:has_azure_runewood"
     },
     "apply": {
-      "species": "dtmalum:azure_runewood",
-      "density": 0.12,
-      "chance": 0.08
+      "species": {
+        "method": "splice_before",
+        "random": {
+          "dtmalum:azure_runewood": 1,
+          "...": 9
+        }
+      }
     }
   },
   {
@@ -36,9 +48,13 @@
       "tag": "#malum:has_rare_azure_runewood"
     },
     "apply": {
-      "species": "dtmalum:azure_runewood",
-      "density": 0.1,
-      "chance": 0.06
+      "species": {
+        "method": "splice_before",
+        "random": {
+          "dtmalum:azure_runewood": 1,
+          "...": 15
+        }
+      }
     }
   }
 ]

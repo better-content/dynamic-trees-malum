@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 final class DtmalumResourceTest {
     private static final Path TREE_ROOT = Path.of("src/main/resources/trees/dtmalum");
+    private static final Path ASSET_ROOT = Path.of("src/main/resources/assets/dtmalum");
     private static final Path GENERATED_ROOT = Path.of("src/generated/resources");
     private static final Set<String> EXPECTED_SPECIES = Set.of(
             "dtmalum:runewood",
@@ -46,7 +48,12 @@ final class DtmalumResourceTest {
                 assertTrue(species.get("signal_energy").getAsDouble() > 0.0, "signal_energy must be positive in " + path);
                 assertTrue(species.get("growth_rate").getAsDouble() > 0.0, "growth_rate must be positive in " + path);
                 assertTrue(species.get("up_probability").getAsInt() > 0, "up_probability must be positive in " + path);
-                assertTrue(species.has("texture_overrides"), "species must point generated seed models at Malum textures");
+                if (species.has("texture_overrides")) {
+                    assertFalse(species.getAsJsonObject("texture_overrides").has("seed"),
+                            "seed models should use addon-owned item textures in " + path);
+                }
+                String tree = path.getFileName().toString().replaceFirst("\\.json$", "");
+                assertExists(ASSET_ROOT.resolve("textures/item/" + tree + "_seed.png"));
             }
         }
     }
@@ -61,23 +68,42 @@ final class DtmalumResourceTest {
             JsonObject apply = element.getAsJsonObject().get("apply").isJsonArray()
                     ? element.getAsJsonObject().getAsJsonArray("apply").get(0).getAsJsonObject()
                     : element.getAsJsonObject().getAsJsonObject("apply");
-            assertTrue(species.contains(apply.get("species").getAsString()), "unknown species in " + defaultWorldGen);
-            assertTrue(apply.get("density").getAsDouble() > 0.0, "density must be positive");
-            assertTrue(apply.get("chance").getAsDouble() > 0.0, "chance must be positive");
+            JsonObject speciesSelection = apply.getAsJsonObject("species");
+            assertEquals("splice_before", speciesSelection.get("method").getAsString());
+            JsonObject random = speciesSelection.getAsJsonObject("random");
+            assertTrue(random.keySet().stream().anyMatch(species::contains), "unknown species in " + defaultWorldGen);
+            assertTrue(random.has("..."), "worldgen splice must preserve existing Dynamic Trees species choices");
+            assertFalse(apply.has("density"), "worldgen should not override biome tree density");
+            assertFalse(apply.has("chance"), "worldgen should not override biome tree chance");
         });
         JsonObject rareRunewood = defaultEntries.get(1).getAsJsonObject();
         assertEquals("#malum:has_rare_runewood", rareRunewood.getAsJsonObject("select").get("tag").getAsString());
         assertTrue(rareRunewood.get("apply").isJsonArray(), "rare runewood should add to existing forest species pools");
 
         Path cancellers = TREE_ROOT.resolve("world_gen/feature_cancellers.json");
-        JsonObject canceller = JsonParser.parseReader(Files.newBufferedReader(cancellers))
-                .getAsJsonArray()
-                .get(0)
-                .getAsJsonObject()
-                .getAsJsonObject("cancellers");
+        JsonArray cancellerEntries = JsonParser.parseReader(Files.newBufferedReader(cancellers)).getAsJsonArray();
+        assertEquals(4, cancellerEntries.size(), "each Malum runewood biome tag should have a scoped canceller");
+        Set<String> cancelledTags = cancellerEntries.asList()
+                .stream()
+                .map(JsonElement::getAsJsonObject)
+                .map(entry -> entry.getAsJsonObject("select").get("tag").getAsString())
+                .collect(Collectors.toUnmodifiableSet());
+        assertEquals(Set.of(
+                "#malum:has_runewood",
+                "#malum:has_rare_runewood",
+                "#malum:has_azure_runewood",
+                "#malum:has_rare_azure_runewood"
+        ), cancelledTags);
 
-        assertEquals("dtmalum:runewood_tree", canceller.get("type").getAsString());
-        assertEquals("malum", canceller.get("namespace").getAsString());
+        cancellerEntries.forEach(element -> {
+            JsonObject canceller = element.getAsJsonObject().getAsJsonObject("cancellers");
+            assertEquals("dtmalum:runewood_tree", canceller.get("type").getAsString());
+            assertTrue(canceller.getAsJsonArray("namespaces")
+                    .asList()
+                    .stream()
+                    .anyMatch(namespace -> "malum".equals(namespace.getAsString())),
+                    "Malum cancellers must be scoped to the Malum namespace");
+        });
     }
 
     @Test
