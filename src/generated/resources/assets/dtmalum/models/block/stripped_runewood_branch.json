@@ -1,0 +1,7 @@
+{
+  "loader": "dynamictrees:branch",
+  "textures": {
+    "bark": "malum:block/runewood/stripped_runewood_log",
+    "rings": "malum:block/runewood/stripped_runewood_log_top"
+  }
+}

@@ -16,5 +16,5 @@
 *.iws
 *.log
 *.class
-/src/generated/resources/
+/src/generated/resources/.cache/
 /.DS_Store

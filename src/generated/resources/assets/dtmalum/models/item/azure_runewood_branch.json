@@ -1,0 +1,7 @@
+{
+  "parent": "dynamictrees:item/branch",
+  "textures": {
+    "bark": "malum:block/runewood/runewood_log",
+    "rings": "malum:block/runewood/runewood_log_top"
+  }
+}
