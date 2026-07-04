@@ -76,3 +76,10 @@ Edit `src/main/resources/trees/dtmalum/world_gen/default.json` and tune the rand
 
 - Azure Runewood currently shares the Runewood primitive log because that is how Malum `1.6.7` is configured.
 - Soulwood integration is deferred.
+
+## Verification
+
+- `./gradlew verifyFast`
+- `./gradlew verifyFull`
+
+`verifyFast` runs the unit-test lane. `verifyFull` adds the headless Forge GameTest pass.
