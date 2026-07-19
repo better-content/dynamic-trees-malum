@@ -83,3 +83,7 @@ Edit `src/main/resources/trees/dtmalum/world_gen/default.json` and tune the rand
 - `./gradlew verifyFull`
 
 `verifyFast` runs the unit-test lane. `verifyFull` adds the headless Forge GameTest pass.
+
+## Community and support
+
+For modpack and mod discussion, playtest feedback, and bug reports, join the [Better Content Discord](https://discord.gg/EkRnZbzqS9).
