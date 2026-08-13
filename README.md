@@ -1,4 +1,4 @@
-# Dynamic Trees for Malum (`dtmalum`)
+# Dynamic Trees for Malum (`dynamic_trees_malum`)
 
 Forge 1.20.1 addon that provides Dynamic Trees integration for Malum Runewood trees.
 
@@ -59,7 +59,7 @@ Note: Malum `1.6.7` does not provide `azure_runewood_log`; Azure Runewood worldg
 
 ## Worldgen replacement strategy
 
-`dtmalum` uses DT worldgen splices plus scoped feature cancellers:
+`dynamic_trees_malum` uses DT worldgen splices plus scoped feature cancellers:
 
 - Splices dynamic species into existing Dynamic Trees species pools in biome tags, without overriding biome tree density/chance:
   - `#malum:has_runewood`
@@ -70,7 +70,7 @@ Note: Malum `1.6.7` does not provide `azure_runewood_log`; Azure Runewood worldg
 
 ## Tuning worldgen
 
-Edit `src/main/resources/trees/dtmalum/world_gen/default.json` and tune the random species weights. Avoid setting per-biome `density` or `chance` unless the pack explicitly wants this addon to change total tree density.
+Edit `src/main/resources/trees/dynamic_trees_malum/world_gen/default.json` and tune the random species weights. Avoid setting per-biome `density` or `chance` unless the pack explicitly wants this addon to change total tree density.
 
 ## Known limitations
 
@@ -87,3 +87,7 @@ Edit `src/main/resources/trees/dtmalum/world_gen/default.json` and tune the rand
 ## Community and support
 
 For modpack and mod discussion, playtest feedback, and bug reports, join the [Better Content Discord](https://discord.gg/EkRnZbzqS9).
+
+## Identity
+
+The clean-break canonical identity is repository/artifact `dynamic-trees-malum`, mod ID and resource namespace `dynamic_trees_malum`, and Maven group `com.bettercontent`. Legacy `dtmalum` worlds and configs are not migrated.

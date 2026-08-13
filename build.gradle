@@ -5,9 +5,9 @@ plugins {
 }
 
 version = project.hasProperty('mod_version') ? project.mod_version : '1.0.0'
-group = 'com.dtmalum'
+group = 'com.bettercontent'
 base {
-    archivesName = 'dtmalum'
+    archivesName = 'dynamic-trees-malum'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -21,7 +21,7 @@ minecraft {
         configureEach {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            property 'forge.enabledGameTestNamespaces', 'dtmalum,minecraft'
+            property 'forge.enabledGameTestNamespaces', 'dynamic_trees_malum,minecraft'
         }
 
         client {
@@ -29,7 +29,7 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             mods {
-                dtmalum {
+                dynamic_trees_malum {
                     source sourceSets.main
                 }
             }
@@ -40,7 +40,7 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             mods {
-                dtmalum {
+                dynamic_trees_malum {
                     source sourceSets.main
                 }
             }
@@ -51,7 +51,7 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             mods {
-                dtmalum {
+                dynamic_trees_malum {
                     source sourceSets.main
                 }
             }
@@ -59,14 +59,14 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-            args '--mod', 'dtmalum',
+            args '--mod', 'dynamic_trees_malum',
                  '--all',
                  '--output', file('src/generated/resources/'),
                  '--existing', file('src/main/resources/'),
                  '--existing-mod', 'dynamictrees',
                  '--existing-mod', 'malum'
             mods {
-                dtmalum {
+                dynamic_trees_malum {
                     source sourceSets.main
                 }
             }
@@ -121,12 +121,12 @@ dependencies {
 tasks.named('jar') {
     manifest {
         attributes([
-                'Specification-Title'     : 'dtmalum',
-                'Specification-Vendor'    : 'dtmalum',
+                'Specification-Title'     : 'dynamic_trees_malum',
+                'Specification-Vendor'    : 'dynamic_trees_malum',
                 'Specification-Version'   : '1',
                 'Implementation-Title'    : project.name,
                 'Implementation-Version'  : project.version,
-                'Implementation-Vendor'   : 'dtmalum'
+                'Implementation-Vendor'   : 'dynamic_trees_malum'
         ])
     }
 }

@@ -12,4 +12,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'dtmalum'
+rootProject.name = 'dynamic-trees-malum'

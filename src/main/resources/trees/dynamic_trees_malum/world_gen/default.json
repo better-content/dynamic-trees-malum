@@ -1,0 +1,60 @@
+[
+  {
+    "select": {
+      "tag": "#malum:has_runewood"
+    },
+    "apply": {
+      "species": {
+        "method": "splice_before",
+        "random": {
+          "dynamic_trees_malum:runewood": 1,
+          "...": 9
+        }
+      }
+    }
+  },
+  {
+    "select": {
+      "tag": "#malum:has_rare_runewood"
+    },
+    "apply": [
+      {
+        "species": {
+          "method": "splice_before",
+          "random": {
+            "dynamic_trees_malum:runewood": 1,
+            "...": 15
+          }
+        }
+      }
+    ]
+  },
+  {
+    "select": {
+      "tag": "#malum:has_azure_runewood"
+    },
+    "apply": {
+      "species": {
+        "method": "splice_before",
+        "random": {
+          "dynamic_trees_malum:azure_runewood": 1,
+          "...": 9
+        }
+      }
+    }
+  },
+  {
+    "select": {
+      "tag": "#malum:has_rare_azure_runewood"
+    },
+    "apply": {
+      "species": {
+        "method": "splice_before",
+        "random": {
+          "dynamic_trees_malum:azure_runewood": 1,
+          "...": 15
+        }
+      }
+    }
+  }
+]
