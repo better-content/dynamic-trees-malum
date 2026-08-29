@@ -25,7 +25,7 @@ Main mod bootstrap follows current 1.20.1 pattern with:
 
 - Minecraft: `1.20.1`
 - Forge: `47.4.13`
-- Dynamic Trees dependency in build: `1.4.9`
+- Dynamic Trees dependency in build: `1.4.10`
 - Malum jar inspected for IDs: `malum-1.20.1-1.6.7.jar`
 
 ## Trees included
@@ -37,14 +37,7 @@ Soulwood is intentionally not implemented in v1.
 
 ## Dependency stance
 
-- Required:
-  - `dynamictrees`
-  - `malum`
-- Optional:
-  - `dynamictreesplus`
-  - `dynamic_trees_addon_lib`
-
-Neither optional dependency is required by the current JSON set.
+The addon requires only Dynamic Trees and Malum.
 
 ## Verified Malum IDs used
 
