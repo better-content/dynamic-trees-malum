@@ -2,7 +2,7 @@
 
 Forge 1.20.1 addon that provides Dynamic Trees integration for Malum Runewood trees.
 
-`OccultDistricts` is a pure seed-and-coordinate provider for later flora and Well consumers. It has no biome, mineral worldgen, mutable region storage, or chunk writes. Its field contains ordinary gaps and continuous fringe, interior, and core bands.
+`OccultDistricts` is a pure seed-and-coordinate provider for later flora and Well consumers. It has no biome, mineral worldgen, mutable region storage, or chunk writes. Its field contains ordinary gaps and continuous fringe, interior, and core bands. The native Dynamic Trees selection route wraps its selector before soil, chance, or block placement: normal Runewood is concentrated in district interiors/cores with sparse fringe clues, and Azure additionally requires a biome base temperature of at most `0.40`.
 
 ## References used (structure + API)
 
@@ -54,9 +54,9 @@ Note: Malum `1.6.7` does not provide `azure_runewood_log`; Azure Runewood worldg
 
 ## Worldgen replacement strategy
 
-`dynamic_trees_malum` uses DT worldgen splices plus scoped feature cancellers:
+`dynamic_trees_malum` wraps the DT species selector plus scoped feature cancellers:
 
-- Splices dynamic species into existing Dynamic Trees species pools in biome tags, without overriding biome tree density/chance:
+- At eligible Malum biome tags, a seed-coordinate selector chooses the dynamic species only when the district policy admits it; every other site delegates to the unmodified Dynamic Trees selector:
   - `#malum:has_runewood`
   - `#malum:has_rare_runewood`
   - `#malum:has_azure_runewood`
@@ -65,7 +65,7 @@ Note: Malum `1.6.7` does not provide `azure_runewood_log`; Azure Runewood worldg
 
 ## Tuning worldgen
 
-Edit `src/main/resources/trees/dynamic_trees_malum/world_gen/default.json` and tune the random species weights. Avoid setting per-biome `density` or `chance` unless the pack explicitly wants this addon to change total tree density.
+Tune `MalumDistrictPolicy` only with fixed-seed coverage tests. The underlying Dynamic Trees biome selection remains the fallback, so this addon does not assign a replacement density or chance to the biome database.
 
 ## Known limitations
 

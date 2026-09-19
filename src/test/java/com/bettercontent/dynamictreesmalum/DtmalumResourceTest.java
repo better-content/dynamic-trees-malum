@@ -59,26 +59,16 @@ final class DtmalumResourceTest {
     }
 
     @Test
-    void worldGenTargetsPackagedSpeciesAndRunewoodCanceller() throws IOException {
-        Set<String> species = resourceIds(TREE_ROOT.resolve("species"));
+    void worldGenUsesSelectorMixinAndRunewoodCanceller() throws IOException {
         Path defaultWorldGen = TREE_ROOT.resolve("world_gen/default.json");
 
         JsonArray defaultEntries = JsonParser.parseReader(Files.newBufferedReader(defaultWorldGen)).getAsJsonArray();
-        defaultEntries.forEach(element -> {
-            JsonObject apply = element.getAsJsonObject().get("apply").isJsonArray()
-                    ? element.getAsJsonObject().getAsJsonArray("apply").get(0).getAsJsonObject()
-                    : element.getAsJsonObject().getAsJsonObject("apply");
-            JsonObject speciesSelection = apply.getAsJsonObject("species");
-            assertEquals("splice_before", speciesSelection.get("method").getAsString());
-            JsonObject random = speciesSelection.getAsJsonObject("random");
-            assertTrue(random.keySet().stream().anyMatch(species::contains), "unknown species in " + defaultWorldGen);
-            assertTrue(random.has("..."), "worldgen splice must preserve existing Dynamic Trees species choices");
-            assertFalse(apply.has("density"), "worldgen should not override biome tree density");
-            assertFalse(apply.has("chance"), "worldgen should not override biome tree chance");
-        });
-        JsonObject rareRunewood = defaultEntries.get(1).getAsJsonObject();
-        assertEquals("#malum:has_rare_runewood", rareRunewood.getAsJsonObject("select").get("tag").getAsString());
-        assertTrue(rareRunewood.get("apply").isJsonArray(), "rare runewood should add to existing forest species pools");
+        assertTrue(defaultEntries.isEmpty(), "district selection wraps the native Dynamic Trees selector instead of altering biome density");
+        assertExists(Path.of("src/main/resources/dynamic_trees_malum.mixins.json"));
+        String mixin = Files.readString(Path.of("src/main/java/com/bettercontent/dynamictreesmalum/mixin/DynamicTreeFeatureMixin.java"));
+        assertTrue(mixin.contains("getSpeciesSelector"));
+        assertTrue(mixin.contains("return fallback.getSpecies"), "non-district sites must retain the native selector fallback");
+        assertTrue(mixin.contains("getBaseTemperature"), "Azure suitability must use actual biome temperature");
 
         Path cancellers = TREE_ROOT.resolve("world_gen/feature_cancellers.json");
         JsonArray cancellerEntries = JsonParser.parseReader(Files.newBufferedReader(cancellers)).getAsJsonArray();
