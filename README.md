@@ -2,6 +2,8 @@
 
 Forge 1.20.1 addon that provides Dynamic Trees integration for Malum Runewood trees.
 
+`OccultDistricts` is a pure seed-and-coordinate provider for later flora and Well consumers. It has no biome, mineral worldgen, mutable region storage, or chunk writes. Its field contains ordinary gaps and continuous fringe, interior, and core bands.
+
 ## References used (structure + API)
 
 - `DynamicTreesTeam/DynamicTrees-BWG` (branch `1.20.1`) as primary structural reference.
