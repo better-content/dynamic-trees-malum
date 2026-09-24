@@ -1,0 +1,23 @@
+package com.bettercontent.dynamictreesmalum.mixin;
+
+import com.bettercontent.dynamictreesmalum.WeepingWellDistrictPolicy;
+import java.util.Optional;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+/** Rejects only out-of-district candidates before Malum evaluates cave and terrain validity. */
+@Mixin(targets = "com.sammy.malum.common.worldgen.WeepingWellStructure", remap = false)
+abstract class WeepingWellStructureMixin {
+    @Inject(method = "findGenerationPoint", at = @At("HEAD"), cancellable = true, require = 1)
+    private void admitOnlyDistrictCandidates(Structure.GenerationContext context,
+        CallbackInfoReturnable<Optional<Structure.GenerationStub>> callback) {
+        ChunkPos candidate = context.chunkPos();
+        if (!WeepingWellDistrictPolicy.admits(context.seed(), candidate.getMinBlockX(), candidate.getMinBlockZ())) {
+            callback.setReturnValue(Optional.empty());
+        }
+    }
+}

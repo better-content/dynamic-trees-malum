@@ -4,6 +4,6 @@
   "package": "com.bettercontent.dynamictreesmalum.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "dynamic_trees_malum.refmap.json",
-  "mixins": ["DynamicTreeFeatureMixin"],
+  "mixins": ["DynamicTreeFeatureMixin", "WeepingWellStructureMixin"],
   "injectors": {"defaultRequire": 1}
 }
