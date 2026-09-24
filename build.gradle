@@ -116,6 +116,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.4.13'
     implementation fg.deobf("com.ferreusveritas.dynamictrees:DynamicTrees-1.20.1:1.4.10")
     compileOnly fg.deobf("curse.maven:malum-484064:6646111")
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     compileOnly fg.deobf("curse.maven:lodestone-616457:6213794")
     runtimeOnly fg.deobf("curse.maven:malum-484064:6646111")
     runtimeOnly fg.deobf("curse.maven:lodestone-616457:6213794")
